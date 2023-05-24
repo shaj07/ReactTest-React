@@ -1,7 +1,7 @@
 {
   "name": "landingpage-react-template",
   "private": true,
-  "homepage": "http://aws-sam-cli-managed-default-samclisourcebucket-181dmbhu62xx8.s3-website-us-east-1.amazonaws.com",
+  "homepage": "",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -23,7 +23,7 @@
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build ",
-    "deploy": "aws s3 sync build/ s3://aws-sam-cli-managed-default-samclisourcebucket-181dmbhu62xx8",
+    "deploy": "",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
