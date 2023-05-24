@@ -1,26 +1,57 @@
-version: '2.1'
-orbs:
-  aws-s3: circleci/aws-s3@3.1
+version: 2.1
 jobs:
   build:
+    working_directory: ~/repo
     docker:
-      - image: cimg/python:3.10
+      - image: circleci/node:12-browsers
     steps:
       - checkout
-      - run: mkdir bucket && echo "lorem ipsum" > bucket/build_asset.txt
-      - aws-s3/sync:
-          arguments: |
-            --acl public-read \
-            --cache-control "max-age=86400"
-          from: bucket
-          role-arn: arn:aws:iam::451972490981/role/VALID-S3-ROLE
-          to: s3://aws-sam-cli-managed-default-samclisourcebucket-181dmbhu62xx8
-      - aws-s3/copy:
-          arguments: '--dryrun'
-          from: bucket/build_asset.txt
-          install-aws-cli: false
-          to: s3://aws-sam-cli-managed-default-samclisourcebucket-181dmbhu62xx8
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package-lock.json" }}
+          - v1-dependencies-
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Build
+          command: |
+            if [ $CIRCLE_BRANCH = 'circleci-project-setup' ]; then
+              npm run build
+            fi
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  deploy:
+    working_directory: ~/repo
+    docker:
+      - image: innovatorjapan/awscli:latest
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Deploy
+          command: |
+            if [ $CIRCLE_BRANCH = 'circleci-project-setup' ]; then
+              aws s3 sync build s3://aws-sam-cli-managed-default-samclisourcebucket-181dmbhu62xx8;
+            fi
 workflows:
-  s3-example:
+  build_and_deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
