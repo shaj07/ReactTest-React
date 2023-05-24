@@ -3,20 +3,14 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:12-browsers
+      - image: circleci/node:latest
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package-lock.json" }}
-          - v1-dependencies-
+     
       - run:
           name: Install dependencies
           command: npm install
-      - save_cache:
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
-          paths:
-            - node_modules
+      
       - run:
           name: Build
           command: |
