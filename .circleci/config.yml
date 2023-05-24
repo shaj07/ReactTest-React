@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Build
           command: |
-            if [ $CIRCLE_BRANCH = 'circleci-project-setup' ]; then
+            if [ $CIRCLE_BRANCH = 'master' ]; then
               npm run build
             fi
       - persist_to_workspace:
@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-            if [ $CIRCLE_BRANCH = 'circleci-project-setup' ]; then
+            if [ $CIRCLE_BRANCH = 'master' ]; then
               aws s3 sync build s3://aws-sam-cli-managed-default-samclisourcebucket-181dmbhu62xx8
             fi
 workflows:
@@ -41,11 +41,11 @@ workflows:
           filters:
             branches:
               only:
-                - circleci-project-setup
+                - master
       - deploy:
           requires:
             - build
           filters:
             branches:
               only:
-                - circleci-project-setup
+                - master
