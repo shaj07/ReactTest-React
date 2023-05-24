@@ -7,8 +7,8 @@ import axios from 'axios';
 
 export const Testimonials = (props) => {
   const [data, setData] = useState({})
-  const [open, setOpen] = React.useState(false);
-  const [err, setErr] = React.useState('')
+  //const [open, setOpen] = React.useState(false);
+  //const [err, setErr] = React.useState('')
   const navigate = Router.useNavigate();
   const updateData = e => {
       setData({
@@ -27,7 +27,7 @@ export const Testimonials = (props) => {
             }).then((res) => {
               
               console.log(res?.data)
-              if(res?.data==true)
+              if(res?.data===true)
               {
                navigate("/dashboard")
                 console.log('hello')
@@ -39,8 +39,8 @@ export const Testimonials = (props) => {
             }).catch((err) => {
                 if (err) {
                     console.log(err?.message)
-                    setErr(err?.message)
-                    setOpen(true)
+                    //setErr(err?.message)
+                    //setOpen(true)
                 }
             })
   }

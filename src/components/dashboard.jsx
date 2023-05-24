@@ -8,10 +8,10 @@ export const Dashboard = () => {
     
   const [landingPageData, setLandingPageData] = useState({})
   const [loandetails, setLoanDetails] = React.useState([])
-  const [open, setOpen] = React.useState(false);
-  const [err, setErr] = React.useState('')
-  const[accesstoken,setaccesstoken]=useState()
-  const results = [{"Name":"hi","Baytree__Status__c":"testt"}]
+  //const [open, setOpen] = React.useState(false);
+  //const [err, setErr] = React.useState('')
+  //const[accesstoken,setaccesstoken]=useState()
+  //const results = [{"Name":"hi","Baytree__Status__c":"testt"}]
   useEffect(() => {
     setLandingPageData(JsonData)
     axios.post("https://cors-anywhere.herokuapp.com/https://pqzxwbqbi6.execute-api.eu-central-1.amazonaws.com/AccessToken",
@@ -38,14 +38,14 @@ export const Dashboard = () => {
     }).catch((err) => {
         if (err) {
             console.log(err?.message)
-            setErr(err?.message)
-            setOpen(true)
+            //setErr(err?.message)
+            //setOpen(true)
         }
     }) }).catch((err) => {
         if (err) {
             console.log(err?.message)
-            setErr(err?.message)
-            setOpen(true)
+           // setErr(err?.message)
+           // setOpen(true)
         }
     })
   }, [])
