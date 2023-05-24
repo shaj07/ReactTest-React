@@ -1,0 +1,17 @@
+version: 2.1
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:latest
+
+jobs:
+  build:
+    executor: node-executor
+    steps:
+      - checkout
+
+      # Install dependencies
+      - run: npm install
+
+      # Build the React app
+      - run: npm run build
