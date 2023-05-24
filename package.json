@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "react-scripts build ",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build ",
     "deploy":"aws s3 sync build/ s3://aws-sam-cli-managed-default-samclisourcebucket-181dmbhu62xx8",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
